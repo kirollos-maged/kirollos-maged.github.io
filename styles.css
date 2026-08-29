@@ -700,6 +700,19 @@ img {
   font-weight: 500;
 }
 
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 14px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+}
+
 /* ===== Skills ===== */
 .skills-grid {
   display: grid;

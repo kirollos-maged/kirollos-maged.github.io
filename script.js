@@ -142,23 +142,24 @@ contactForm.addEventListener('submit', (e) => {
 
   if (!name || !email || !message) return;
 
-  // Simulate send (in real use, connect to a backend or Formspree etc.)
+  const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+  );
+  const mailtoLink = `mailto:kirom8914@gmail.com?subject=${subject}&body=${body}`;
+
   const btn = contactForm.querySelector('button');
   const originalText = btn.textContent;
-  btn.textContent = 'Sending...';
+  btn.textContent = 'Opening mail app...';
   btn.disabled = true;
 
-  setTimeout(() => {
-    btn.textContent = 'Message Sent! ✓';
-    btn.style.background = 'linear-gradient(135deg, #34d399, #22d3ee)';
-    contactForm.reset();
+  window.location.href = mailtoLink;
 
-    setTimeout(() => {
-      btn.textContent = originalText;
-      btn.style.background = '';
-      btn.disabled = false;
-    }, 2500);
-  }, 1200);
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.disabled = false;
+    contactForm.reset();
+  }, 1800);
 });
 
 /* ===== Footer Year ===== */
