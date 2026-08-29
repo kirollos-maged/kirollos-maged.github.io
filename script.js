@@ -5,37 +5,43 @@ const html = document.documentElement;
 // Load saved theme
 const savedTheme = localStorage.getItem('theme') || 'dark';
 html.setAttribute('data-theme', savedTheme);
-updateThemeIcon(savedTheme);
-
-themeToggle.addEventListener('click', () => {
-  const current = html.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-  updateThemeIcon(next);
-});
+if (themeToggle) {
+  updateThemeIcon(savedTheme);
+  themeToggle.addEventListener('click', () => {
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    updateThemeIcon(next);
+  });
+}
 
 function updateThemeIcon(theme) {
+  if (!themeToggle) return;
   const icon = themeToggle.querySelector('i');
-  icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  if (icon) {
+    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  }
 }
 
 /* ===== Mobile Navigation ===== */
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('nav-links');
 
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  navLinks.classList.toggle('open');
-});
-
-// Close menu on link click
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navLinks.classList.remove('open');
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('open');
   });
-});
+
+  // Close menu on link click
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('open');
+    });
+  });
+}
 
 /* ===== Navbar Scroll Effect ===== */
 const navbar = document.getElementById('navbar');
@@ -118,49 +124,53 @@ setTimeout(type, 600);
 /* ===== Back to Top ===== */
 const backToTop = document.getElementById('back-to-top');
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backToTop.classList.add('visible');
-  } else {
-    backToTop.classList.remove('visible');
-  }
-});
+if (backToTop) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
 
-backToTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
 
 /* ===== Contact Form ===== */
 const contactForm = document.getElementById('contact-form');
 
-contactForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
 
-  if (!name || !email || !message) return;
+    if (!name || !email || !message) return;
 
-  const subject = encodeURIComponent(`Portfolio contact from ${name}`);
-  const body = encodeURIComponent(
-    `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-  );
-  const mailtoLink = `mailto:kirom8914@gmail.com?subject=${subject}&body=${body}`;
+    const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+    );
+    const mailtoLink = `mailto:kirom8914@gmail.com?subject=${subject}&body=${body}`;
 
-  const btn = contactForm.querySelector('button');
-  const originalText = btn.textContent;
-  btn.textContent = 'Opening mail app...';
-  btn.disabled = true;
+    const btn = contactForm.querySelector('button');
+    const originalText = btn.textContent;
+    btn.textContent = 'Opening mail app...';
+    btn.disabled = true;
 
-  window.location.href = mailtoLink;
+    window.location.href = mailtoLink;
 
-  setTimeout(() => {
-    btn.textContent = originalText;
-    btn.disabled = false;
-    contactForm.reset();
-  }, 1800);
-});
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.disabled = false;
+      contactForm.reset();
+    }, 1800);
+  });
+}
 
 /* ===== Footer Year ===== */
 document.getElementById('year').textContent = new Date().getFullYear();
